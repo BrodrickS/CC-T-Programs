@@ -1,7 +1,7 @@
 if require then
-  require 'ccStub'
+  require("ComputerCraftStubs.turtle")
 end
 
-#Hello World!
+--Hello World!
 turtle.forward()
 turtle.back()
