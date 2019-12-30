@@ -5,19 +5,31 @@ else
   require("/Programs.SmartTurtleAPI.smartTurtle")
 end
 
-local function breakTree(basePoint)
+local function breakTree(basePoint, leafCount)
   local origin = false
   if basePoint == nil then
     basePoint = smartTurtle.newPoint()
     origin = true
+    leafCount = 0
   end
   
   for idx, dir in pairs(breakOrder) do
-    local exists, data, isLog = smartTurtle.inspectIsLogDirection(dir, true)
-    if exists and isLog then
-      digFunc[dir]()
-      smartTurtle.move(dir)
-      breakTree(basePoint)
+    local exists, data, isLog = smartTurtle.inspectIsLogDirection(dir)
+    exists, data, isLeaf = smartTurtle.inspectIsLeavesDirection(dir)
+    if exists then 
+      if isLog then
+        digFunc[dir]()
+        smartTurtle.move(dir)
+        leafCount = 0
+        breakTree(basePoint, leafCount)
+      else
+        if isLeaf and leafCount < 1 then
+          leafCount = leafCount + 1
+          digFunc[dir]()
+          smartTurtle.move(dir)
+          breakTree(basePoint, leafCount)
+        end
+      end
     end
   end
   if origin then
@@ -29,6 +41,7 @@ local function breakTree(basePoint)
 end
 breakOrder = {
   D.DOWN,
+  D.FORWARD,
   D.UP,
 }
 digFunc = {
