@@ -8,6 +8,7 @@ end
 local failures = 0
 while true do
   success = turtle.dig()
+  os.sleep(.5)
   if not success then
     failures = failures + 1
   else
@@ -15,9 +16,9 @@ while true do
   end
   if failures > 15 then
     turtle.forward()
-    os.sleep(5)
+    os.sleep(2)
     turtle.back()
-    os.sleep(5)
+    os.sleep(2)
     failures = 0
   end
 end
