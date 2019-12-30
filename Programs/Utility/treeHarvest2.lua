@@ -47,14 +47,21 @@ local startPoint = smartTurtle.newPoint()
 local exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.FORWARD)
 while forwardLimit > 0 do
   smartTurtle.move(D.FORWARD)
-  exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.FORWARD)
   forwardLimit = forwardLimit - 1
-
-  if isLog then
-    local success = turtle.dig()
-    smartTurtle.move(D.FORWARD)
-    
-    breakTree()
+  exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.FORWARD)
+  
+  if exists then
+    if isLog then
+      local success = turtle.dig()
+      smartTurtle.move(D.FORWARD)
+      forwardLimit = forwardLimit - 1
+      
+      breakTree()
+    else
+      local exists, dat, isLeaf = smartTurtle.inspectIsLeavesDirection(TD.FORWARD)
+      if isLeaf then
+        turtle.dig()
+    end
   end
 end
 
