@@ -17,7 +17,7 @@ local height = 0
 local exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.FORWARD)
 while not isLog and not exists and forward <= forwardLimit do
   turtle.forward()
-  local exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.FORWARD)
+  exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.FORWARD)
   forward = forward + 1
 end
 
