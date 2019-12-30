@@ -8,7 +8,7 @@ mainURL = "https://raw.githubusercontent.com/BrodrickS/CC-T-Programs/master"
 
 source = {
   Exporting = {
-    "download.lua"
+    "download.lua",
   },
   Programs = {
     SmartTurtleAPI = {
@@ -16,7 +16,8 @@ source = {
     },
     Utility = {
       "attackForever.lua",
-      "treeHarvest.lua"
+      "treeHarvest.lua",
+      "mineAhead.lua",
     },
   },
 }
