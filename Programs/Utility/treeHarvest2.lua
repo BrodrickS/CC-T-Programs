@@ -20,10 +20,10 @@ while forwardLimit > 0 do
   forwardLimit = forwardLimit - 1
 
   if isLog then
-    local basePoint = smartTurtle.newPoint()
-    
     local success = turtle.dig()
     smartTurtle.move(D.FORWARD)
+    local basePoint = smartTurtle.newPoint()
+    
     exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.UP, true)
     while exists and isLog do
       turtle.digUp()
