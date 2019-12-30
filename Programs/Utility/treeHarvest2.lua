@@ -7,27 +7,32 @@ else
 end
 
 -- Limits
-local forwardLimit = 4
+local forwardLimit = 40
 
--- Remember height
+-- Remember start point
 local startPoint = smartTurtle.newPoint()
 
 -- Check the block ahead
 local exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.FORWARD)
-while not isLog and not exists and forwardLimit > 0 do
+while forwardLimit > 0 do
   smartTurtle.move(D.FORWARD)
   exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.FORWARD)
   forwardLimit = forwardLimit - 1
-end
 
-if isLog then
-  local success = turtle.dig()
-  smartTurtle.move(D.FORWARD)
-  exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.UP, true)
-  while exists and isLog do
-    turtle.digUp()
-    smartTurtle.move(D.UP)
+  if isLog then
+    local basePoint = smartTurtle.newPoint()
+    
+    local success = turtle.dig()
+    smartTurtle.move(D.FORWARD)
     exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.UP, true)
+    while exists and isLog do
+      turtle.digUp()
+      smartTurtle.move(D.UP)
+      exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.UP, true)
+    end
+    
+    smartTurtle.returnPoint(basePoint)
+    smartTurtle.removePoint(basePoint)
   end
 end
 
