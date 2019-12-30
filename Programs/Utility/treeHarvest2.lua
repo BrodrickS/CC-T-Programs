@@ -67,7 +67,7 @@ digFunc = {
 }
 
 -- Limits
-local forwardLimit = 2
+local forwardLimit = 40
 
 -- Remember start point
 local startPoint = smartTurtle.newPoint()
