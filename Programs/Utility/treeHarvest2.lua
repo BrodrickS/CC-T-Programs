@@ -61,6 +61,7 @@ while forwardLimit > 0 do
       local exists, dat, isLeaf = smartTurtle.inspectIsLeavesDirection(TD.FORWARD)
       if isLeaf then
         turtle.dig()
+      end
     end
   end
 end
