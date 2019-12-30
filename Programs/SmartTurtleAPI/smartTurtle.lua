@@ -18,8 +18,8 @@ D = {
   FORWARD = 2,
   DOWN = -1,
   BACK = -2,
-  LEFT_T = 3,
-  RIGHT_T = -3,
+  LEFT = 3,
+  RIGHT = -3,
 }
 
 -- #### FIELDS AND PROPERTIES ####
@@ -46,8 +46,28 @@ st._moveFunc = {
   [D.FORWARD] = turtle.forward,
   [D.DOWN] = turtle.down,
   [D.BACK] = turtle.back,
-  [D.RIGHT_T] = turtle.turnRight,
-  [D.LEFT_T] = turtle.turnLeft,
+  [D.RIGHT] = turtle.turnRight,
+  [D.LEFT] = turtle.turnLeft,
+}
+
+function st.face(dir, remember)
+  if remember == nil then
+    remember = true
+  end
+  
+  local dirs = st._faceDirs[dir]
+  if func then
+    if remember then
+      for idx, val in pairs(dirs) do
+        st.move(dir, remember)
+      end
+    end
+  end
+end
+st._faceDirs = {
+  [D.LEFT] = {D.LEFT},
+  [D.RIGHT] = {D.RIGHT},
+  [D.BACK] = {D.LEFT, D.LEFT},
 }
 
 -- Logs moves
@@ -57,7 +77,11 @@ function st.rememberMove(dir)
     local point = st.memPoints[idx]
     if point ~= nil then
       local lastMove = point[#point]
-      if lastMove == -dir then
+      local last2Move = point[#point - 1]
+      if (lastMove == D.LEFT or lastMove == D.RIGHT) and lastMove == dir and lastMove == last2Move then
+        table.remove(point)
+        table.insert(point, -dir)
+      elseif lastMove == -dir then
         table.remove(point)
       else
         table.insert(point, dir)
@@ -117,12 +141,20 @@ end
 function st.inspectDirection(dir)
   local func = st._inspectDirection[dir]
   if (func) then
-    return func()
+    local point = st.newPoint()
+    st.face(dir)
+    local exists, data = func()
+    st.returnPoint(point)
+    st.removePoint(point)
+    return exists, data
   end
 end
 st._inspectDirection = {
   [TD.UP] = turtle.inspectUp,
   [TD.FORWARD] = turtle.inspect,
+  [TD.LEFT] = turtle.inspect,
+  [TD.RIGHT] = turtle.inspect,
+  [TD.BACK] = turtle.inspect,
   [TD.DOWN] = turtle.inspectDown,
 }
 

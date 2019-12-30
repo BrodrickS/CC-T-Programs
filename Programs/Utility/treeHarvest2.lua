@@ -13,7 +13,13 @@ local function breakTree(basePoint, leafCount)
     leafCount = 0
   end
   
+  local lastDir = nil
+  local savePoint = nil
   for idx, dir in pairs(breakOrder) do
+    if dir == lastDir then
+      smartTurtle.face(D.LEFT)
+      savePoint = smartTurtle.newPoint()
+    end
     local exists, data, isLog = smartTurtle.inspectIsLogDirection(dir)
     exists, data, isLeaf = smartTurtle.inspectIsLeavesDirection(dir)
     if exists then 
@@ -23,7 +29,7 @@ local function breakTree(basePoint, leafCount)
         leafCount = 0
         breakTree(basePoint, leafCount)
       else
-        if isLeaf and leafCount < 1 and data.state.variant == "oak" then
+        if isLeaf and leafCount < 2 and data.state.variant == "oak" then
           leafCount = leafCount + 1
           digFunc[dir]()
           smartTurtle.move(dir)
@@ -31,7 +37,12 @@ local function breakTree(basePoint, leafCount)
         end
       end
     end
+    lastDir = dir
   end
+  if savePoint != nil then
+    smartTurtle.returnPoint(savePoint)
+    smartTurtle.removePoint(savePoint)
+  else
   if origin then
     smartTurtle.returnPoint(basePoint)
     smartTurtle.removePoint(basePoint)
@@ -41,7 +52,10 @@ local function breakTree(basePoint, leafCount)
 end
 breakOrder = {
   D.DOWN,
-  D.FORWARD,
+  D.FORWARD,  
+  D.FORWARD,  
+  D.FORWARD,  
+  D.FORWARD,  
   D.UP,
 }
 digFunc = {
