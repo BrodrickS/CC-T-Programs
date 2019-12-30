@@ -39,10 +39,10 @@ local function breakTree(basePoint, leafCount)
     end
     lastDir = dir
   end
-  if savePoint != nil then
+  if savePoint ~= nil then
     smartTurtle.returnPoint(savePoint)
     smartTurtle.removePoint(savePoint)
-  else
+  end
   if origin then
     smartTurtle.returnPoint(basePoint)
     smartTurtle.removePoint(basePoint)
@@ -71,11 +71,11 @@ local forwardLimit = 40
 local startPoint = smartTurtle.newPoint()
 
 -- Check the block ahead
-local exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.FORWARD)
+local exists, data, isLog = smartTurtle.inspectIsLogDirection(D.FORWARD)
 while forwardLimit > 0 do
   smartTurtle.move(D.FORWARD)
   forwardLimit = forwardLimit - 1
-  exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.FORWARD)
+  exists, data, isLog = smartTurtle.inspectIsLogDirection(D.FORWARD)
   
   if exists then
     if isLog then
@@ -85,7 +85,7 @@ while forwardLimit > 0 do
       
       breakTree()
     else
-      local exists, dat, isLeaf = smartTurtle.inspectIsLeavesDirection(TD.FORWARD)
+      local exists, dat, isLeaf = smartTurtle.inspectIsLeavesDirection(D.FORWARD)
       if isLeaf then
         turtle.dig()
       end

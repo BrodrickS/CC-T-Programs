@@ -7,12 +7,6 @@ local st = {}
 
 -- #### STATIC FIELDS AND PROPERTIES ####
 
-TD = {
-  UP = 1,
-  FORWARD = 2,
-  DOWN = -1,
-}
-
 D = {
   UP = 1,
   FORWARD = 2,
@@ -150,12 +144,12 @@ function st.inspectDirection(dir)
   end
 end
 st._inspectDirection = {
-  [TD.UP] = turtle.inspectUp,
-  [TD.FORWARD] = turtle.inspect,
-  [TD.LEFT] = turtle.inspect,
-  [TD.RIGHT] = turtle.inspect,
-  [TD.BACK] = turtle.inspect,
-  [TD.DOWN] = turtle.inspectDown,
+  [D.UP] = turtle.inspectUp,
+  [D.FORWARD] = turtle.inspect,
+  [D.LEFT] = turtle.inspect,
+  [D.RIGHT] = turtle.inspect,
+  [D.BACK] = turtle.inspect,
+  [D.DOWN] = turtle.inspectDown,
 }
 
 -- Directionally checks if this block ahead is a log
