@@ -7,6 +7,9 @@ end
 mainURL = "https://raw.githubusercontent.com/BrodrickS/CC-T-Programs/master"
 
 source = {
+  Exporting = {
+    "download.lua"
+  },
   Programs = {
     SmartTurtleAPI = {
       "smartTurtle.lua",
