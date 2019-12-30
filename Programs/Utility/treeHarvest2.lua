@@ -1,6 +1,5 @@
 local isCC = (os.version ~= nil)
 if not isCC then
-  --require("ComputerCraftStubs.stub_turtle")
   require("Programs.SmartTurtleAPI.smartTurtle")
 else
   require("/Programs.SmartTurtleAPI.smartTurtle")
