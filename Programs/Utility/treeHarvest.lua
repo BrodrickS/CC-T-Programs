@@ -24,6 +24,7 @@ end
 if isLog then
   local success = turtle.dig()
   turtle.forward()
+  forward = forward + 1
   exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.UP, true)
   while exists and isLog do
     turtle.digUp()

@@ -59,4 +59,14 @@ function st.inspectIsLogDirection(dir, includeLeaves)
   return exists, data, isLog
 end
 
+function st.inspectIsLeavesDirection(dir)
+  local exists, data = st.inspectDirection(dir)
+  if not exists then
+    return exists, data, false
+  end
+  
+  local isLeaves = string.find(data.name, "leaves") ~= nil
+  return exists, data, isLeaves
+end
+
 smartTurtle = st
