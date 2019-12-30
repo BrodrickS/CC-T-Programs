@@ -10,35 +10,24 @@ end
 local forwardLimit = 4
 
 -- Remember height
-local forward = 0
-local height = 0
+local startPoint = smartTurtle.newPoint()
 
 -- Check the block ahead
 local exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.FORWARD)
 while not isLog and not exists and forward <= forwardLimit do
-  turtle.forward()
+  smartTurtle.move(D.FORWARD)
   exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.FORWARD)
-  forward = forward + 1
 end
 
 if isLog then
   local success = turtle.dig()
-  turtle.forward()
-  forward = forward + 1
+  smartTurtle.move(D.FORWARD)
   exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.UP, true)
   while exists and isLog do
     turtle.digUp()
-    turtle.up()
+    smartTurtle.move(D.UP)
     exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.UP, true)
-    height = height + 1
-  end
-  while height > 0 do
-    turtle.down()
-    height = height - 1
   end
 end
 
-while forward > 0 do
-  turtle.back()
-  forward = forward - 1
-end
+smartTurtle.returnPoint(startPoint)

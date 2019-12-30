@@ -14,12 +14,12 @@ TD = {
 }
 
 D = {
-  U = 1,
-  F = 2,
-  D = -1,
-  B = -2,
-  L = 3,
-  R = -3,
+  UP = 1,
+  FORWARD = 2,
+  DOWN = -1,
+  BACK = -2,
+  LEFT_T = 3,
+  RIGHT_T = -3,
 }
 
 -- #### FIELDS AND PROPERTIES ####
@@ -42,12 +42,12 @@ function st.move(dir, remember)
   end
 end
 st._moveFunc = {
-  [D.U] = turtle.up,
-  [D.F] = turtle.forward,
-  [D.D] = turtle.down,
-  [D.B] = turtle.back,
-  [D.R] = turtle.turnRight,
-  [D.L] = turtle.turnLeft,
+  [D.UP] = turtle.up,
+  [D.FORWARD] = turtle.forward,
+  [D.DOWN] = turtle.down,
+  [D.BACK] = turtle.back,
+  [D.RIGHT_T] = turtle.turnRight,
+  [D.LEFT_T] = turtle.turnLeft,
 }
 
 -- Logs moves
@@ -56,9 +56,9 @@ function st.rememberMove(dir)
   for idx = 1, st.memPointsCount do
     local point = st.memPoints[idx]
     if point ~= nil then
-      local lastMove = table[#table]
-      if lastMove = -dir then
-        table.remove(t)
+      local lastMove = point[#point]
+      if lastMove == -dir then
+        table.remove(point)
       else
         table.insert(point, dir)
       end
@@ -87,10 +87,10 @@ function st.returnPoint(pointIndex)
   if point ~= nil then
     -- reverse table
     invList = {}
-    for idx, value in point do
-      invList[#point - idx + 1] = value
+    for idx, value in pairs(point) do
+      table.insert(invList, 1, value)
     end
-    for idx, value in invList do
+    for idx, value in pairs(invList) do
       st.move(-value)
     end
   end
