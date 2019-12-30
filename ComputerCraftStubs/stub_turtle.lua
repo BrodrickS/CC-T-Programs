@@ -48,7 +48,13 @@ end
 -- ## Inspection + Inspection Automation ##
 
 -- Turtle.Inspect
+function t:inspectUp()
+  return true, { state = { axis = "y", variant = "birch", }, name = "minecraft:log", metadata = 2, }
+end
 function t:inspect()
+  return true, { state = { axis = "y", variant = "birch", }, name = "minecraft:log", metadata = 2, }
+end
+function t:inspectDown()
   return true, { state = { axis = "y", variant = "birch", }, name = "minecraft:log", metadata = 2, }
 end
 

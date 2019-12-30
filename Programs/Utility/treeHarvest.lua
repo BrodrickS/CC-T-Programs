@@ -1,11 +1,14 @@
 local isCC = (os.version ~= nil)
 if not isCC then
-  require("/ComputerCraftStubs.stub_turtle")
+  require("ComputerCraftStubs.stub_turtle")
 end
-require("/Programs.SmartTurtleAPI.smartTurtle")
+require("Programs.SmartTurtleAPI.smartTurtle")
+
+-- Remember movements
 
 -- Check the block ahead
-if smartTurtle.inspectIsLog() then
+exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.FORWARD)
+if isLog then
   print("Is log!")
 else
   print("Is not log!")
