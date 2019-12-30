@@ -21,6 +21,9 @@ local function breakTree(basePoint, leafCount)
         savePoint = smartTurtle.newPoint()
       end
       smartTurtle.face(D.LEFT)
+    elseif savePoint ~= nil then
+      smartTurtle.returnPoint(savePoint)
+      smartTurtle.removePoint(savePoint)
     end
     local exists, data, isLog = smartTurtle.inspectIsLogDirection(dir)
     exists, data, isLeaf = smartTurtle.inspectIsLeavesDirection(dir)
@@ -40,10 +43,6 @@ local function breakTree(basePoint, leafCount)
       end
     end
     lastDir = dir
-  end
-  if savePoint ~= nil then
-    smartTurtle.returnPoint(savePoint)
-    smartTurtle.removePoint(savePoint)
   end
   if origin then
     smartTurtle.returnPoint(basePoint)
