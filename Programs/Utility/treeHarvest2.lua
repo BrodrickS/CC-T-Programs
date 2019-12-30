@@ -7,7 +7,7 @@ else
 end
 
 local function breakTree(basePoint)
-  local origin = true
+  local origin = false
   if basePoint == nil then
     basePoint = smartTurtle.newPoint()
     origin = true
