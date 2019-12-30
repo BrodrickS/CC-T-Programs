@@ -23,7 +23,7 @@ local function breakTree(basePoint, leafCount)
         leafCount = 0
         breakTree(basePoint, leafCount)
       else
-        if isLeaf and leafCount < 1 then
+        if isLeaf and leafCount < 1 and data.state.variant = "oak" then
           leafCount = leafCount + 1
           digFunc[dir]()
           smartTurtle.move(dir)
