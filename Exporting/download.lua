@@ -18,6 +18,7 @@ source = {
       "attackForever.lua",
       "treeHarvest.lua",
       "mineAhead.lua",
+      "treeHarvest2.lua
     },
   },
 }
