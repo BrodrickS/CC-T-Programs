@@ -14,9 +14,10 @@ local startPoint = smartTurtle.newPoint()
 
 -- Check the block ahead
 local exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.FORWARD)
-while not isLog and not exists and forward <= forwardLimit do
+while not isLog and not exists and forwardLimit > 0 do
   smartTurtle.move(D.FORWARD)
   exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.FORWARD)
+  forwardLimit = forwardLimit - 1
 end
 
 if isLog then
