@@ -19,6 +19,14 @@ function t:down()
   print("DOWN")
   return true
 end
+function t.turnLeft()
+  print("LEFT")
+  return true
+end
+function t.turnRight()
+  print("RIGHT")
+  return true
+end
 
 -- ## Attack ##
 

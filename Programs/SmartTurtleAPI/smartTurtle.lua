@@ -10,9 +10,9 @@ local st = {}
 D = {
   UP = 1,
   FORWARD = 2,
+  LEFT = 3,
   DOWN = -1,
   BACK = -2,
-  LEFT = 3,
   RIGHT = -3,
 }
 
@@ -39,9 +39,9 @@ st._moveFunc = {
   [D.UP] = turtle.up,
   [D.FORWARD] = turtle.forward,
   [D.DOWN] = turtle.down,
+  [D.LEFT] = turtle.turnLeft,
   [D.BACK] = turtle.back,
   [D.RIGHT] = turtle.turnRight,
-  [D.LEFT] = turtle.turnLeft,
 }
 
 function st.face(dir, remember)
@@ -50,11 +50,9 @@ function st.face(dir, remember)
   end
   
   local dirs = st._faceDirs[dir]
-  if func then
-    if remember then
-      for idx, val in pairs(dirs) do
-        st.move(dir, remember)
-      end
+  if dirs then
+    for idx, val in pairs(dirs) do
+      st.move(dir, remember)
     end
   end
 end
@@ -73,6 +71,7 @@ function st.rememberMove(dir)
       local lastMove = point[#point]
       local last2Move = point[#point - 1]
       if (lastMove == D.LEFT or lastMove == D.RIGHT) and lastMove == dir and lastMove == last2Move then
+        table.remove(point)
         table.remove(point)
         table.insert(point, -dir)
       elseif lastMove == -dir then

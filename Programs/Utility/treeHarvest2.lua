@@ -17,8 +17,10 @@ local function breakTree(basePoint, leafCount)
   local savePoint = nil
   for idx, dir in pairs(breakOrder) do
     if dir == lastDir then
+      if savePoint == nil then
+        savePoint = smartTurtle.newPoint()
+      end
       smartTurtle.face(D.LEFT)
-      savePoint = smartTurtle.newPoint()
     end
     local exists, data, isLog = smartTurtle.inspectIsLogDirection(dir)
     exists, data, isLeaf = smartTurtle.inspectIsLeavesDirection(dir)
@@ -65,7 +67,7 @@ digFunc = {
 }
 
 -- Limits
-local forwardLimit = 40
+local forwardLimit = 2
 
 -- Remember start point
 local startPoint = smartTurtle.newPoint()
