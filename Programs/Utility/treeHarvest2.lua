@@ -39,6 +39,7 @@ local function breakTree(basePoint, leafCount)
           digFunc[dir]()
           smartTurtle.move(dir)
           breakTree(basePoint, leafCount)
+          leafCount = leafCount - 1
         end
       end
     end
