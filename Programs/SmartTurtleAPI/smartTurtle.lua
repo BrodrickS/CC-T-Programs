@@ -51,7 +51,7 @@ function st.inspectIsLogDirection(dir, includeLeaves)
     return exists, data, false
   end
   
-  local isLog = string.find(data.name, "log")
+  local isLog = string.find(data.name, "log") ~= nil
   if includeLeaves then
     isLog = isLog or string.find(data.name, "leaves")
   end
