@@ -8,9 +8,9 @@ local st = {}
 -- #### STATIC FIELDS AND PROPERTIES ####
 
 TD = {
-  UP = 0,
-  FORWARD = 1,
-  DOWN = 2,
+  UP = 1,
+  FORWARD = 2,
+  DOWN = -1,
 }
 
 D = {
@@ -93,6 +93,14 @@ function st.returnPoint(pointIndex)
     for idx, value in pairs(invList) do
       st.move(-value)
     end
+  end
+end
+
+function st.stepBackToPoint(pointIndex)
+  local point = st.memPoints[pointIndex]
+  if point ~= nil then
+    local lastMove = point[#point]
+    st.move(-lastMove)
   end
 end
 

@@ -6,6 +6,38 @@ else
   require("/Programs.SmartTurtleAPI.smartTurtle")
 end
 
+local function breakTree(basePoint)
+  local origin = true
+  if basePoint == nil then
+    basePoint = smartTurtle.newPoint()
+    origin = true
+  end
+  
+  for idx, dir in pairs(breakOrder) do
+    local exists, data, isLog = smartTurtle.inspectIsLogDirection(dir, true)
+    if exists and isLog then
+      digFunc[dir]()
+      smartTurtle.move(dir)
+      breakTree(basePoint)
+    end
+  end
+  if origin then
+    smartTurtle.returnPoint(basePoint)
+    smartTurtle.removePoint(basePoint)
+  else
+    smartTurtle.stepBackToPoint(basePoint)
+  end
+end
+breakOrder = {
+  D.DOWN,
+  D.UP,
+}
+digFunc = {
+  [D.DOWN] = turtle.digDown,
+  [D.FORWARD] = turtle.dig,
+  [D.UP] = turtle.digUp,
+}
+
 -- Limits
 local forwardLimit = 40
 
@@ -22,17 +54,8 @@ while forwardLimit > 0 do
   if isLog then
     local success = turtle.dig()
     smartTurtle.move(D.FORWARD)
-    local basePoint = smartTurtle.newPoint()
     
-    exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.UP, true)
-    while exists and isLog do
-      turtle.digUp()
-      smartTurtle.move(D.UP)
-      exists, data, isLog = smartTurtle.inspectIsLogDirection(TD.UP, true)
-    end
-    
-    smartTurtle.returnPoint(basePoint)
-    smartTurtle.removePoint(basePoint)
+    breakTree()
   end
 end
 
