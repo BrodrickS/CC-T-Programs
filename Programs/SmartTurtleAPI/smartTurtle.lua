@@ -118,7 +118,7 @@ function st.returnPoint(pointIndex, failFunction)
         local attempts = 0
         while not st.move(-value) and attempts < 3 do
           attempts = attempts + 1
-          print("move failed, attempting fix #" .. attempts "...")
+          print("move failed, attempting fix #" .. tostring(attempts) .. "...")
           failFunction()
         end
     
