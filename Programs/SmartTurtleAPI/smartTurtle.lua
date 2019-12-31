@@ -104,7 +104,7 @@ end
 function st.returnPoint(pointIndex, failFunction)
   -- Set fail function to a sleep function if it's not defined by the call
   
-  failFunction = failFunction or function() os.sleep(1) end
+  failFunction = failFunction or moveFail
   
   local point = st.memPoints[pointIndex]
   if point ~= nil then
@@ -117,14 +117,19 @@ function st.returnPoint(pointIndex, failFunction)
         
         local attempts = 0
         while not st.move(-value) and attempts < 3 do
-          failFunction()
           attempts = attempts + 1
+          print("move failed, attempting fix #" .. attempts "...")
+          failFunction()
         end
     
       if not success and failFunction then
       end
     end
   end
+end
+local function moveFail()
+  print("sleeping 1...")
+  os.sleep(1)
 end
 
 function st.stepBackToPoint(pointIndex)

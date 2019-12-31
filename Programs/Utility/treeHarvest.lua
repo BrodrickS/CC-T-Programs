@@ -75,6 +75,7 @@ digFunc = {
 --
 
 local function turnAndBreak()
+  print("turning and breaking...")
   local turnPoint = smartTurtle.newPoint()
   smartTurtle.face(D.BACK)
   breakTree()
