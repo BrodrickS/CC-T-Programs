@@ -54,7 +54,7 @@ function st.face(dir, remember)
   local dirs = st._faceDirs[dir]
   if dirs then
     for idx, val in pairs(dirs) do
-      st.move(dir, remember)
+      st.move(val, remember)
     end
   end
 end
