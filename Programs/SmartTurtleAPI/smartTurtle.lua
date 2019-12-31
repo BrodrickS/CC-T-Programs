@@ -1,6 +1,7 @@
 local isCC = (os.version ~= nil)
 if not isCC then
   require("ComputerCraftStubs.stub_turtle")
+  require("ComputerCraftStubs.stub_shell")
 end
 
 local st = {}
@@ -99,7 +100,11 @@ function st.removePoint(pointIndex)
 end
 
 -- Return to Memory Point
-function st.returnPoint(pointIndex)
+function st.returnPoint(pointIndex, failFunction)
+  -- Set fail function to a sleep function if it's not defined by the call
+  
+  failFunction = failFunction or function() os.sleep(1) end
+  
   local point = st.memPoints[pointIndex]
   if point ~= nil then
     -- reverse table
@@ -108,7 +113,15 @@ function st.returnPoint(pointIndex)
       table.insert(invList, 1, value)
     end
     for idx, value in pairs(invList) do
-      st.move(-value)
+        
+        local attempts = 0
+        while not st.move(-value) and attempts < 3 do
+          failFunction()
+          attempts = attempts + 1
+        end
+    
+      if not success and failFunction then
+      end
     end
   end
 end

@@ -5,6 +5,17 @@ else
   require("/Programs.SmartTurtleAPI.smartTurtle")
 end
 
+-- Inputs and variables
+local verticalLength = tonumber(arg[2]) or 4
+local horizontalRows = tonumber(arg[3]) or 1
+local horizontalPadding = tonumber(arg[4]) or 2
+local horizontalDirection = D.LEFT
+
+if (horizontalRows < 0) then
+  horizontalRows = -horizontalRows
+  horizontalDirection = -horizontalDirection
+end
+
 local function breakTree(basePoint, leafCount)
   local origin = false
   if basePoint == nil then
@@ -61,34 +72,63 @@ digFunc = {
   [D.FORWARD] = turtle.dig,
   [D.UP] = turtle.digUp,
 }
+--
 
--- Limits
-local forwardLimit = 40
+local function turnAndBreak()
+  local turnPoint = smartTurtle.newPoint()
+  smartTurtle.face(D.BACK)
+  breakTree()
+  smartTurtle.returnPoint(turnPoint)
+  smartTurtle.removePoint(turnPoint)
+end
+--
 
--- Remember start point
-local startPoint = smartTurtle.newPoint()
-
--- Check the block ahead
-local exists, data, isLog = smartTurtle.inspectIsLogDirection(D.FORWARD)
-while forwardLimit > 0 do
-  smartTurtle.move(D.FORWARD)
-  forwardLimit = forwardLimit - 1
-  exists, data, isLog = smartTurtle.inspectIsLogDirection(D.FORWARD)
+local function breakRow()
+  local rowStartPoint = smartTurtle.newPoint()
+  local forward = 0
   
-  if exists then
-    if isLog then
-      local success = turtle.dig()
-      smartTurtle.move(D.FORWARD)
-      forwardLimit = forwardLimit - 1
-      
-      breakTree()
-    else
-      local exists, dat, isLeaf = smartTurtle.inspectIsLeavesDirection(D.FORWARD)
-      if isLeaf then
-        turtle.dig()
+  -- Check the block ahead
+  local exists, data, isLog = smartTurtle.inspectIsLogDirection(D.FORWARD)
+  while forward < verticalLength do
+    smartTurtle.move(D.FORWARD)
+    forward = forward + 1
+    exists, data, isLog = smartTurtle.inspectIsLogDirection(D.FORWARD)
+    
+    if exists then
+      if isLog then
+        local success = turtle.dig()
+        smartTurtle.move(D.FORWARD)
+        forward = forward + 1
+        
+        breakTree()
+      else
+        local exists, dat, isLeaf = smartTurtle.inspectIsLeavesDirection(D.FORWARD)
+        if isLeaf then
+          turtle.dig()
+        end
       end
     end
   end
+  
+  smartTurtle.returnPoint(rowStartPoint, turnAndBreak)
+  smartTurtle.removePoint(rowStartPoint)
 end
+--
 
+-- Remember start point
+local startPoint = smartTurtle.newPoint()
+-- For each row do
+for rowIndex = 1, horizontalRows do
+  
+  breakRow()
+  
+  if rowIndex < horizontalRows then
+    smartTurtle.face(horizontalDirection)
+    for itr = 0, horizontalPadding do
+      smartTurtle.move(D.FORWARD)
+    end
+    smartTurtle.face(-horizontalDirection)
+  end
+  
+end
 smartTurtle.returnPoint(startPoint)

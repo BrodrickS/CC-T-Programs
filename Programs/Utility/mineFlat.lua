@@ -6,11 +6,11 @@ else
   require("/Programs.SmartTurtleAPI.smartTurtle")
 end
 
-local forwardMax = arg[1]
+local forwardMax = tonumber(arg[1])
 if forwardMax == nil then
   forwardMax = 10
 end
-local sideMax = arg[2]
+local sideMax = tonumber(arg[2])
 if sideMax == nil or sideMax == 0 then
   sideMax = 10
 end
