@@ -20,6 +20,7 @@ source = {
       "mineAhead.lua",
       "treeHarvestLarge.lua",
       "farmCobble.lua",
+      "mineFlat.lua",
     },
   },
 }
