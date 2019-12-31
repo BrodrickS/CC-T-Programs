@@ -30,10 +30,11 @@ function st.move(dir, remember)
   
   local func = st._moveFunc[dir]
   if func then
-    if remember then
+    local success = func()
+    if success and remember then
       st.rememberMove(dir)
     end
-    return func()
+    return success
   end
 end
 st._moveFunc = {

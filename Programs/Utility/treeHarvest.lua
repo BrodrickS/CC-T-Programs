@@ -6,12 +6,12 @@ else
 end
 
 -- Inputs and variables
-local verticalLength = tonumber(arg[2]) or 4
-local horizontalRows = tonumber(arg[3]) or 1
-local horizontalPadding = tonumber(arg[4]) or 2
+local verticalLength = tonumber(arg[1]) or 4
+local horizontalRows = tonumber(arg[2]) or 1
+local horizontalPadding = tonumber(arg[3]) or 2
 local horizontalDirection = D.LEFT
 
-if (horizontalRows < 0) then
+if horizontalRows < 0 then
   horizontalRows = -horizontalRows
   horizontalDirection = -horizontalDirection
 end
