@@ -17,6 +17,13 @@ if horizontalRows < 0 then
 end
 
 local function breakTree(basePoint, leafCount)
+  -- For first check, check if log is in front
+  exists, data, isLog = smartTurtle.inspectIsLogDirection(D.FORWARD)
+  if exists and isLog then
+    local success = turtle.dig()
+    smartTurtle.move(D.FORWARD)
+  end
+  
   local origin = false
   if basePoint == nil then
     basePoint = smartTurtle.newPoint()
