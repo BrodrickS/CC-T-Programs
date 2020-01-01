@@ -66,6 +66,11 @@ local function breakTree(basePoint, leafCount)
   if origin then
     smartTurtle.returnPoint(basePoint)
     smartTurtle.removePoint(basePoint)
+    local slot = smartTurtle.findFirst("sapling", false)
+    if slot then
+      turtle.select(slot)
+      turtle.placeDown()
+    end
   else
     smartTurtle.stepBackToPoint(basePoint)
   end
