@@ -54,8 +54,10 @@ local function farmRow()
     end
     if isTilledEarth or isReady then
       local slot = smartTurtle.findFirst(seed, false)
-      turtle.select(slot)
-      turtle.placeDown()
+      if slot then
+        turtle.select(slot)
+        turtle.placeDown()
+      end
     end
     smartTurtle.move(D.FORWARD)
     isPlant, isReady, seedName, isTilledEarth = smartTurtle.inspectIsCropDown()
