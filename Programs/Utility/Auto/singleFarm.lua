@@ -57,7 +57,7 @@ local function farmRow()
       turtle.select(slot)
       turtle.placeDown()
     end
-    smartTurtle.move(D.FOWARD)
+    smartTurtle.move(D.FORWARD)
     isPlant, isReady, seedName, isTilledEarth = smartTurtle.inspectIsCropDown()
   end
   
