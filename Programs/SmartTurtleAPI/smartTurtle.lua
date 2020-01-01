@@ -206,6 +206,7 @@ function st.inspectIsCropDown()
   local isPlant = false
   local isReady = false
   local seedName = nil
+  local isTilledEarth = false
   
   local exists, data = st.inspectDirection(D.DOWN)
   if exists then
@@ -217,8 +218,12 @@ function st.inspectIsCropDown()
       end
       seedName = st._crops[name].seed
     end
+  else
+    if st.move(D.DOWN) and st.move(D.UP) and turtle.digDown() then
+      isTilledEarth = true
+    end
   end
-  return isPlant, isReady, seedName
+  return isPlant, isReady, seedName, isTilledEarth
 end
 st._crops = {
   ["potatoes"] = {
@@ -231,13 +236,34 @@ st._crops = {
 -- ## INVENTORY ##
 
 -- Grabs the first empty slot in the inventory
-function st.selectEmpty()
+function st.findEmpty()
   for slot = 1, 16 do
     if turtle.getItemCount(slot) == 0 then
       return slot
     end
   end
   return nil
+end
+--
+
+-- Grabs the first item with the name quoted. Can be exact
+function st.findFirst(name, exact)
+  exact = exact or false
+  for slot = 1, 16 do
+    local data = turtle.getItemDetail(slot)
+    if data ~= nil then
+        local blockName = data.name:sub((data.name:find(":") or 0)+1)
+        if exact then
+          if blockName == name then
+            return slot
+          end
+        else
+          if blockName:find(name) ~= nil then
+            return slot
+          end
+        end
+    end
+  end
 end
 --
 

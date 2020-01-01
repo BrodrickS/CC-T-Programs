@@ -77,8 +77,20 @@ function t.refuel()
 end  
 
 -- ## Place and Pick Blocks ##
+function t.placeDown()
+  print("PLACE DOWN")
+end
+--
 
 -- ## Inventory ##
+function t.select(slot)
+  if slot == nil then
+    print("error!")
+  else
+    print("SELECT " .. slot)
+  end
+end
+--
 
 -- ## Inspection + Inspection Automation ##
 
@@ -92,13 +104,21 @@ end
 function t.inspectDown()
   return t.getInspectResult()
 end
+--
+function t.getItemDetail()  
+  local exists, data = t.getInspectResult(false)
+  return data
+end
 
-t.goodInspectResult = { true, { state = { axis = "y", variant = "birch", }, name = "minecraft:log", metadata = 2, } }
+
+t.goodInspectResult = { true, { state = { age = 7 }, name = "minecraft:potatoes", metadata = 7, } }
 t.badInspectResult = { false, nil }
 t.goodInspects = 5
-function t.getInspectResult()
+function t.getInspectResult(increment)
   if t.goodInspects > 0 then
-    t.goodInspects = t.goodInspects - 1
+    if increment == nil or increment then
+      t.goodInspects = t.goodInspects - 1
+    end
     return t.goodInspectResult[1], t.goodInspectResult[2]
   end
   return t.badInspectResult[1], t.badInspectResult[2]
