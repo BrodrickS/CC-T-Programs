@@ -15,6 +15,9 @@ source = {
       "smartTurtle.lua",
     },
     Utility = {
+      Auto = {
+        "singleFarm.lua"
+      },
       "attackForever.lua",
       "treeHarvest.lua",
       "mineAhead.lua",

@@ -45,6 +45,7 @@ st._moveFunc = {
   [D.BACK] = turtle.back,
   [D.RIGHT] = turtle.turnRight,
 }
+--
 
 function st.face(dir, remember)
   if remember == nil then
@@ -63,6 +64,7 @@ st._faceDirs = {
   [D.RIGHT] = {D.RIGHT},
   [D.BACK] = {D.LEFT, D.LEFT},
 }
+--
 
 -- Logs moves
 -- Called inside st.move(), so we can call st.returnPoint() later
@@ -84,6 +86,7 @@ function st.rememberMove(dir)
     end
   end
 end 
+--
 
 -- Create New Memory Point
 function st.newPoint()
@@ -99,6 +102,7 @@ st.memPointsCount = 0
 function st.removePoint(pointIndex)
   st.memPoints[pointIndex] = nil
 end
+--
 
 -- Return to Memory Point
 function st.returnPoint(pointIndex, failFunction)
@@ -131,6 +135,7 @@ local function moveFail()
   print("sleeping 1...")
   os.sleep(1)
 end
+--
 
 function st.stepBackToPoint(pointIndex)
   local point = st.memPoints[pointIndex]
@@ -139,13 +144,7 @@ function st.stepBackToPoint(pointIndex)
     st.move(-lastMove)
   end
 end
-
----- Moves aggressively
---function st.agressiveForward()
---  while not turtle.forward() do
---    turtle.attack()
---  end
---end
+--
 
 -- ## INSPECTION ##
 
@@ -169,6 +168,7 @@ st._inspectDirection = {
   [D.BACK] = turtle.inspect,
   [D.DOWN] = turtle.inspectDown,
 }
+--
 
 -- Directionally checks if this block ahead is a log
 function st.inspectIsLogDirection(dir, includeLeaves)
@@ -187,7 +187,9 @@ function st.inspectIsLogDirection(dir, includeLeaves)
 
   return exists, data, isLog
 end
+--
 
+-- Directionally checks if this block ahead is leaves
 function st.inspectIsLeavesDirection(dir)
   local exists, data = st.inspectDirection(dir)
   if not exists then
@@ -197,5 +199,46 @@ function st.inspectIsLeavesDirection(dir)
   local isLeaves = string.find(data.name, "leaves") ~= nil
   return exists, data, isLeaves
 end
+--
+
+-- Checks if the block under is a crop, and if so, if it's ready to harvest
+function st.inspectIsCropDown()
+  local isPlant = false
+  local isReady = false
+  local seedName = nil
+  
+  local exists, data = st.inspectDirection(D.DOWN)
+  if exists then
+    local name = data.name:sub((data.name:find(":") or 0)+1)
+    if st._crops[name] ~= nil then
+      isPlant = true
+      if data.state.age == st._crops[name].age then
+        isReady = true
+      end
+      seedName = st._crops[name].seed
+    end
+  end
+  return isPlant, isReady, seedName
+end
+st._crops = {
+  ["potatoes"] = {
+    age = 7,
+    seed = "potato",
+  },
+}
+--
+
+-- ## INVENTORY ##
+
+-- Grabs the first empty slot in the inventory
+function st.selectEmpty()
+  for slot = 1, 16 do
+    if turtle.getItemCount(slot) == 0 then
+      return slot
+    end
+  end
+  return nil
+end
+--
 
 smartTurtle = st

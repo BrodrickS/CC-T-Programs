@@ -23,7 +23,7 @@ else
   dir = D.RIGHT
 end
 
-local side = 0
+local side = -1
 
 local trueStart = smartTurtle.newPoint()
 while side < sideMax do

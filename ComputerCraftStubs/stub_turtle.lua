@@ -66,9 +66,15 @@ end
 
 -- ## Utility ##
 
+t._fuelLevel = 500
 function t.getFuelLevel()
-  return 50
+  return t._fuelLevel
 end
+
+function t.refuel()
+  t._fuelLevel = t._fuelLevel + 500
+  return true
+end  
 
 -- ## Place and Pick Blocks ##
 
