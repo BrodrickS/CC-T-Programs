@@ -36,15 +36,15 @@ else
 end
 
 -- Do forward last
-local forward = -1
+local forward = 0
 local forwardStart = smartTurtle.newPoint()
 while forward < forwardMax do
   
-  local horiz = -1
+  local horiz = 0
   local horizStart = smartTurtle.newPoint()
   while horiz < horizMax do
     
-    local vert  = 0
+    local vert  = 1
     local vertStart = smartTurtle.newPoint()
     while vert < vertMax do
       smartTurtle.dig(vertDir)
@@ -75,4 +75,5 @@ while forward < forwardMax do
   end
   
 end
+smartTurtle.returnPoint(forwardStart)
 
