@@ -21,6 +21,23 @@ D = {
 
 -- #### METHODS ####
 
+-- ## DIGGING & PLACING ##
+
+-- Digs in a dirction
+function st.dig(dir)
+  local func =  st._digFunc[dir]
+  if func then
+    return func()
+  end
+  return nil
+end
+st._digFunc = {
+  [D.UP] = turtle.digUp,
+  [D.FORWARD] = turtle.dig,
+  [D.DOWN] = turtle.digDown,
+}
+--
+
 -- ## MOVEMENT ##
 -- Moves Directionally
 function st.move(dir, remember)
@@ -108,7 +125,9 @@ end
 function st.returnPoint(pointIndex, failFunction)
   -- Set fail function to a sleep function if it's not defined by the call
   
-  failFunction = failFunction or moveFail
+  if failFunction == nil then
+    failFunction = st._moveFail
+  end
   
   local point = st.memPoints[pointIndex]
   if point ~= nil then
@@ -131,7 +150,7 @@ function st.returnPoint(pointIndex, failFunction)
     end
   end
 end
-local function moveFail()
+function st._moveFail()
   print("sleeping 1...")
   os.sleep(1)
 end
