@@ -26,6 +26,8 @@ turtle.place()
 
 smartTurtle.face(D.BACK)
 
+local itemTable = {}
+
 -- Empty the entire box into the chest behind
 local emptySlot = nil
 while emptySlot == nil do
@@ -34,10 +36,19 @@ while emptySlot == nil do
   smartTurtle.face(D.BACK)
   for slotIdx = 1,16 do
     turtle.select(slotIdx)
+    local details =  turtle.getItemDetail()
+    local fullName = details.name
+    if details.damage ~= nil then
+      fullName = fullName .. tostring(details.damage)
+    end
+    if itemTable[fullname] == nil then
+      itemTable[fullname] = 0
+    end
+    itemTable[fullName] = itemTable[fullName] + details.count
     turtle.drop()
   end
 end
 
-
+print(itemTable)
 
 smartTurtle.returnPoint(start)
