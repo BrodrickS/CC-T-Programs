@@ -37,16 +37,19 @@ while emptySlot == nil do
   for slotIdx = 1,16 do
     turtle.select(slotIdx)
     local details =  turtle.getItemDetail()
-    local fullname = details.name
-    if details.damage ~= nil then
-      fullname = fullname .. tostring(details.damage)
+    if details ~= nil then
+      local fullname = details.name
+      if details.damage ~= nil then
+        fullname = fullname .. tostring(details.damage)
+      end
+      if itemTable[fullname] == nil then
+        itemTable[fullname] = 0
+      end
+      itemTable[fullname] = itemTable[fullname] + details.count
+      turtle.drop()
     end
-    if itemTable[fullname] == nil then
-      itemTable[fullname] = 0
-    end
-    itemTable[fullname] = itemTable[fullname] + details.count
-    turtle.drop()
   end
+  smartTurtle.returnPoint(start)
 end
 
 print(itemTable)
