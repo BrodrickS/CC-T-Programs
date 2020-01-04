@@ -52,6 +52,8 @@ while emptySlot == nil do
   smartTurtle.returnPoint(start)
 end
 
-print(itemTable)
+for key, val in pairs(itemTable)
+  print(key .. " = " .. tostring(val))
+end
 
 smartTurtle.returnPoint(start)
