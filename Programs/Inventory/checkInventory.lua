@@ -11,11 +11,11 @@ local start = smartTurtle.newPoint()
 
 -- check that we have chests ready
 local slot = smartTurtle.findFirst("chest", true)
-while slot == nil then
+while slot == nil do
   print("Need 2 chests!")
   os.sleep(5)
   slot = smartTurtle.findFirst("chest", true)
-do
+end
 turtle.select(slot)
 
 smartTurtle.face(D.BACK)
