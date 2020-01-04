@@ -14,6 +14,9 @@ source = {
     SmartTurtleAPI = {
       "smartTurtle.lua",
     },
+    Inventory = {
+      "checkInventory.lua"
+    },
     Utility = {
       Auto = {
         "singleFarm.lua"
