@@ -32,7 +32,10 @@ while emptySlot == nil do
   while turtle.suck() do end
   emptySlot = smartTurtle.findEmpty()
   smartTurtle.face(D.BACK)
-  while turtle.drop() do end
+  for slotIdx = 1,16 do
+    turtle.select(slotIdx)
+    turtle.drop()
+  end
 end
 
 
