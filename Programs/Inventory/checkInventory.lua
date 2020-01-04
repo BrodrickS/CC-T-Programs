@@ -40,7 +40,7 @@ while emptySlot == nil do
     if details ~= nil then
       local fullname = details.name
       if details.damage ~= nil then
-        fullname = fullname .. tostring(details.damage)
+        fullname = fullname .. "_" .. tostring(details.damage)
       end
       if itemTable[fullname] == nil then
         itemTable[fullname] = 0
@@ -52,8 +52,33 @@ while emptySlot == nil do
   smartTurtle.returnPoint(start)
 end
 
-for key, val in pairs(itemTable)
+-- Print results
+for key, val in pairs(itemTable) do
   print(key .. " = " .. tostring(val))
 end
+
+-- Return all items back into original chest
+smartTurtle.face(D.BACK)
+local endPoint = smartTurtle.newPoint()
+
+local emptySlot = nil
+while emptySlot == nil do
+  while turtle.suck() do end
+  emptySlot = smartTurtle.findEmpty()
+  smartTurtle.face(D.BACK)
+  for slotIdx = 1,16 do
+    turtle.select(slotIdx)
+    local count =  turtle.getItemCount()
+    if details > 0 then
+      turtle.drop()
+    end
+  end
+  smartTurtle.returnPoint(endPoint)
+end
+
+turtle.dig()
+smartTurtle.move(D.FORWARD)
+turtle.dig()
+
 
 smartTurtle.returnPoint(start)
