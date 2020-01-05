@@ -13,9 +13,14 @@ source = {
   Programs = {
     SmartTurtleAPI = {
       "smartTurtle.lua",
+      "stInventory.lua",
+      "stMovement.lua",
+      "stActions.lua",
     },
     Inventory = {
-      "checkInventory.lua"
+      "checkInventory.lua",
+      "transferInventory.lua",
+      "warehouse.lua",
     },
     Utility = {
       Auto = {

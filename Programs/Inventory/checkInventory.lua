@@ -69,7 +69,7 @@ while emptySlot == nil do
   for slotIdx = 1,16 do
     turtle.select(slotIdx)
     local count =  turtle.getItemCount()
-    if details > 0 then
+    if count > 0 then
       turtle.drop()
     end
   end
@@ -79,6 +79,5 @@ end
 turtle.dig()
 smartTurtle.move(D.FORWARD)
 turtle.dig()
-
 
 smartTurtle.returnPoint(start)
