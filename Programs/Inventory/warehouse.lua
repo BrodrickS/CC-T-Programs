@@ -66,7 +66,9 @@ function moveToChest(wall, chest)
   end
 
 end
+--
 
+-- Moves the contents of the chest ahead to the empty ender chest contained
 function transferToEnder()
   
   -- Get and place enderchest
@@ -100,22 +102,74 @@ function transferToEnder()
   smartTurtle.dig(D.FORWARD)
   
 end
+--
 
+-- Moves the contents of the full ender chest to the empty lockbox
 function transferFromEnder()
+  
+  -- Get and place chest or lockChest
+  local slot = smartTurtle.findFirst("chest")
+  if isCC and slot == nil then
+    print("CHEST_WARN: No Chest Found!")
+    return false
+  end
+  turtle.select(slot)
+  smartTurtle.place(D.FORWARD)
+  
+    -- Get and place enderchest
+  local slot = smartTurtle.findFirst("ender_storage")
+  if isCC and slot == nil then
+    print("CHEST_WARN: No Ender Chest Found!")
+    return false
+  end
+  turtle.select(slot)
+  
+  smartTurtle.face(D.BACK)
+  smartTurtle.place(D.FORWARD)
+  
+  local emptySlot = nil
+  while emptySlot == nil do
+    while turtle.suck() do end
+    emptySlot = smartTurtle.findEmpty()
+    smartTurtle.face(D.BACK)
+    for slotIdx = 1,16 do
+      turtle.select(slotIdx)
+      turtle.drop()
+    end
+    
+    smartTurtle.face(D.BACK)
+  end
+  
+  smartTurtle.dig(D.FORWARD)
   
 end
 
 -- Entry point of program
 function main()
+  local filename = "warehouse.lock"
+  
+  local wall = arg[1]
+  local chest = tonumber(arg[2])
   
   if isCC then smartTurtle.refuel(2000, 16, D.DOWN) end
   local startPoint = smartTurtle.newPoint()
-  moveToChest("a",9)
+  
+  -- Get current lockbox
+  local file = io.open(filename, "r")
+  if file ~= nil then
+    local oldWall = file:read()
+    local oldChest = tonumber(file:read())
+    moveToChest(oldWall, oldChest)
+    transferFromEnder()
+  end
+  
+  moveToChest(wall, chest)
   transferToEnder()
+  file = io.open(filename, "w+")
+  file:write(wall .. "\n" .. tostring(chest))
+  file:close()
   
   print("-- DONE --")
-  
-  
   
   smartTurtle.returnPoint(startPoint)
   
