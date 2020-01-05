@@ -55,11 +55,53 @@ function moveToChest(wall, chest)
   for int = 1,horiz do
     smartTurtle.move(D.FORWARD)
   end
-  smartTurtle.face(horizDir)
+  if not flip then 
+    smartTurtle.face(horizDir)
+  else
+    smartTurtle.face(-horizDir)
+    smartTurtle.move(D.FORWARD)
+  end
   for int = 1,vert do
     smartTurtle.move(vertDir)
   end
 
+end
+
+function transferToEnder()
+  
+  -- Get and place enderchest
+  local slot = smartTurtle.findFirst("ender_storage")
+  if slot == nil then
+    print("CHEST_WARN: No Ender Chest Found!")
+    return false
+  end
+  
+  smartTurtle.face(D.BACK)
+  smartTurtle.place(D.FORWARD)
+  smartTurtle.face(D.BACK)
+  
+  local emptySlot = nil
+  while emptySlot == nil do
+    while turtle.suck() do end
+    smartTurtle.face(D.BACK)
+    for slotIdx = 1,16 do
+      turtle.select(slotIdx)
+      turtle.drop()
+    end
+    
+    emptySlot = smartTurtle.findEmpty()
+    if emptySlot ~= nil then
+      smartTurtle.dig(D.FORWARD)  
+    end
+    smartTurtle.face(D.BACK)
+  end
+  
+  smartTurtle.dig(D.FORWARD)
+  
+end
+
+function transferFromEnder()
+  
 end
 
 -- Entry point of program
@@ -67,9 +109,13 @@ function main()
   
   if isCC then smartTurtle.refuel(2000, 16, D.DOWN) end
   local startPoint = smartTurtle.newPoint()
-  moveToChest("a",15)
+  moveToChest("a",9)
+  transferToEnder()
   
   print("-- DONE --")
+  
+  
+  
   smartTurtle.returnPoint(startPoint)
   
 end
