@@ -161,6 +161,7 @@ function main()
     local oldChest = tonumber(file:read())
     moveToChest(oldWall, oldChest)
     transferFromEnder()
+    smartTurtle.returnPoint(startPoint)
   end
   
   moveToChest(wall, chest)
