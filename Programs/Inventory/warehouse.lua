@@ -93,8 +93,10 @@ function transferToEnder()
     emptySlot = smartTurtle.findEmpty()
     smartTurtle.face(D.BACK)
     for slotIdx = 1,16 do
-      turtle.select(slotIdx)
-      turtle.drop()
+      if turtle.getItemCount(slotIdx) > 0 then
+        turtle.select(slotIdx)
+        turtle.drop()
+      end
     end
     
     if emptySlot ~= nil then
@@ -137,8 +139,10 @@ function transferFromEnder()
     emptySlot = smartTurtle.findEmpty()
     smartTurtle.face(D.BACK)
     for slotIdx = 1,16 do
-      turtle.select(slotIdx)
-      turtle.drop()
+      if turtle.getItemCount(slotIdx) > 0 then
+        turtle.select(slotIdx)
+        turtle.drop()
+      end
     end
     
     smartTurtle.face(D.BACK)
