@@ -75,6 +75,7 @@ function transferToEnder()
     print("CHEST_WARN: No Ender Chest Found!")
     return false
   end
+  turtle.select(slot)
   
   smartTurtle.face(D.BACK)
   smartTurtle.place(D.FORWARD)
