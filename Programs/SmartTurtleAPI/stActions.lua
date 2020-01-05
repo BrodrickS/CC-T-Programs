@@ -34,6 +34,18 @@ return function(st)
   --
 
   -- ## PLACE ## --
+  function st.place(dir)
+    local func = st._placeFunc[dir]
+    if func then
+      return func()
+    end
+    return nil
+  end
+  st._placeFunc = {
+    [D.UP] = turtle.placeUp,
+    [D.FORWARD] = turtle.place,
+    [D.DOWN] = turtle.placeDown,
+  }
 
   -- ## SUCK ## --
   function st.suck(dir)
