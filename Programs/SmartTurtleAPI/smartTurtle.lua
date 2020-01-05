@@ -19,12 +19,21 @@ D = {
   
 -- #### APPLY METHODS ####
 
-local movementMethods = require("Programs.SmartTurtleAPI.stMovement")
-movementMethods(st)
-local inventoryMethods = require("Programs.SmartTurtleAPI.stInventory")
-inventoryMethods(st)
-local actionMethods = require("Programs.SmartTurtleAPI.stActions")
-actionMethods(st)
+reqs = {
+  "Programs.SmartTurtleAPI.stMovement",
+  "Programs.SmartTurtleAPI.stInventory",
+  "Programs.SmartTurtleAPI.stActions",
+}
+if isCC then
+  for k, v in pairs(reqs) do
+    reqs[k] = "/" .. reqs[k]
+  end
+end
+for k, value in pairs(reqs) do
+  local adder = require(value)
+  adder(st)
+end
+--
 
 -- ## INSPECTION ##
 
