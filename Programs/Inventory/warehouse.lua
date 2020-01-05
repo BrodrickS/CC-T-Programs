@@ -84,13 +84,13 @@ function transferToEnder()
   local emptySlot = nil
   while emptySlot == nil do
     while turtle.suck() do end
+    emptySlot = smartTurtle.findEmpty()
     smartTurtle.face(D.BACK)
     for slotIdx = 1,16 do
       turtle.select(slotIdx)
       turtle.drop()
     end
     
-    emptySlot = smartTurtle.findEmpty()
     if emptySlot ~= nil then
       smartTurtle.dig(D.FORWARD)  
     end
