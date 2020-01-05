@@ -32,6 +32,10 @@ function moveToChest(wall, chest)
   local row = 1 + math.floor((pos-1)/5)
   local col = 1 + ((pos-1)%5)
   
+  if flip then 
+      row = 4 - row
+  end
+  
   -- Turn shelf num and position into horiz, vert, and dir
   local HORIZ_OFFSET = -6
   local SHELF_HORIZ_SPACING = 6
@@ -143,6 +147,7 @@ function transferFromEnder()
   smartTurtle.dig(D.FORWARD)
   
 end
+--
 
 -- Entry point of program
 function main()
