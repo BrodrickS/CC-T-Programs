@@ -7,17 +7,25 @@ else
   require("/Programs.SmartTurtleAPI.smartTurtle")
 end
 
-function moveToChest(wall, chest)
+
+-- Checks that the input chest coordinates are valid
+function validateTarget(wall, chest)
   if wall ~= "a" and wall ~= "b" then
     print("CHEST_WARN: No Wall Labeled '" .. wall .. "'")
-    return
+    return false
   end
   
   if chest > 45 then 
     print("CHEST_WARN: No Chests Greater than 45!")
-    return 
+    return false
   end
   
+  return true
+end
+--
+
+-- Navigates the turtle from the start position to facing the target chest
+function moveToChest(wall, chest)
   smartTurtle.move(D.FORWARD)
   
   local flip = false
@@ -159,6 +167,10 @@ function main()
   
   local wall = arg[1]
   local chest = tonumber(arg[2])
+  local isValid = validateTarget(wall, chest)
+  if not isValid then
+    return
+  end
   
   if isCC then smartTurtle.refuel(2000, 16, D.DOWN) end
   local startPoint = smartTurtle.newPoint()
@@ -168,6 +180,10 @@ function main()
   if file ~= nil then
     local oldWall = file:read()
     local oldChest = tonumber(file:read())
+    local oldIsValid = validateTarget(oldWall, oldChest)
+    if not oldIsValid then
+      return
+    end
     moveToChest(oldWall, oldChest)
     transferFromEnder()
     smartTurtle.returnPoint(startPoint)
