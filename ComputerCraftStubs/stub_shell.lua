@@ -1,8 +1,9 @@
 local s = {}
 local o = {}
 
-function s.run(arg)
-  print(arg)
+function s.run(...)
+  local arg = {...}
+  print(unpack(arg))
 end
 
 function o.sleep(arg)

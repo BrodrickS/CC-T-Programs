@@ -7,6 +7,7 @@ end
 mainURL = "https://raw.githubusercontent.com/BrodrickS/CC-T-Programs/master"
 
 source = {
+  "startup.lua",
   Exporting = {
     "download.lua",
   },
