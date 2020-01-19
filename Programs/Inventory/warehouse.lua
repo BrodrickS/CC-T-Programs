@@ -11,12 +11,12 @@ end
 -- Checks that the input chest coordinates are valid
 function validateTarget(wall, chest)
   if wall ~= "a" and wall ~= "b" then
-    print("CHEST_WARN: No Wall Labeled '" .. wall .. "'")
+    print("WH_WARN: No Wall Labeled '" .. wall .. "'")
     return false
   end
   
   if chest > 45 then 
-    print("CHEST_WARN: No Chests Greater than 45!")
+    print("WH_WARN: No Chests Greater than 45!")
     return false
   end
   
@@ -182,6 +182,9 @@ function main()
     local oldChest = tonumber(file:read())
     local oldIsValid = validateTarget(oldWall, oldChest)
     if not oldIsValid then
+      return
+    elseif wall == oldWall and chest == oldChest then
+      print("WH_INFO: The selected chets is already in use")
       return
     end
     moveToChest(oldWall, oldChest)
