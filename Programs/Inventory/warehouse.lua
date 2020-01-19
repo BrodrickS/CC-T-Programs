@@ -184,7 +184,7 @@ function main()
     if not oldIsValid then
       return
     elseif wall == oldWall and chest == oldChest then
-      print("WH_INFO: The selected chets is already in use")
+      print("WH_INFO: The selected chest is already in use")
       return
     end
     moveToChest(oldWall, oldChest)
