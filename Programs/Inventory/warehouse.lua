@@ -86,7 +86,7 @@ function transferToEnder()
   -- Get and place enderchest
   local slot = smartTurtle.findFirst("ender_storage")
   if slot == nil then
-    print("CHEST_WARN: No Ender Chest Found!")
+    print("WH_WARN: No Ender Chest Found!")
     return false
   end
   turtle.select(slot)
@@ -124,7 +124,7 @@ function transferFromEnder()
   -- Get and place chest or lockChest
   local slot = smartTurtle.findFirst("chest")
   if isCC and slot == nil then
-    print("CHEST_WARN: No Chest Found!")
+    print("WH_WARN: No Chest Found!")
     return false
   end
   turtle.select(slot)
@@ -133,7 +133,7 @@ function transferFromEnder()
     -- Get and place enderchest
   local slot = smartTurtle.findFirst("ender_storage")
   if isCC and slot == nil then
-    print("CHEST_WARN: No Ender Chest Found!")
+    print("WH_WARN: No Ender Chest Found!")
     return false
   end
   turtle.select(slot)
